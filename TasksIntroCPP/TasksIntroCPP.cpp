@@ -1,11 +1,122 @@
 #include <iostream>
-#include <math.h>
 using namespace std;
 
 int main()
 {
-	
+	int firstNumber;
+	int secondNumber;
+	int thirdNumber;
+	int fourthNumber;
+	int fifthNumber;
+
+	cin >> firstNumber;
+	cin >> secondNumber;
+	cin >> thirdNumber;
+	cin >> fourthNumber;
+	cin >> fifthNumber;
+
+	bool isSecondInValidTrion = 
+		(secondNumber >= firstNumber && secondNumber >= thirdNumber) || (secondNumber <= firstNumber && secondNumber <= thirdNumber);
+
+	bool isThirdInValidTrion =
+		(thirdNumber >= secondNumber && thirdNumber >= fourthNumber) || (thirdNumber <= secondNumber && thirdNumber <= fourthNumber);
+
+	bool isFourthInValidTrion =
+		(fourthNumber >= thirdNumber && fourthNumber >= fifthNumber) || (fourthNumber <= thirdNumber && fourthNumber <= fifthNumber);
+
+	if (isSecondInValidTrion && isThirdInValidTrion && isFourthInValidTrion) {
+		cout << "yes";
+	}
+	else {
+		cout << "no";
+	}
 }
+/*
+int hours;
+	int minutes;
+
+	cin >> hours;
+	cin >> minutes;
+
+	minutes += 15;
+
+	if (minutes > 60) {
+		hours++;
+		minutes = minutes - 60;
+	}
+
+	if (hours >= 24) {
+		hours = 0;
+	}
+
+	if (minutes > 10 && hours > 10) {
+		cout << hours << ":" << minutes;
+	}
+	else if (minutes > 10 && hours < 10) {
+		cout << "0" << hours << ":" << minutes;
+	}
+	else if (minutes < 10 && hours > 10) {
+		cout << hours << ":" << "0" << minutes;
+	}
+	else {
+		cout << "0" << hours << ":" << "0" << minutes;
+	}
+*/
+
+/*
+	const double PI = 3.1415;
+	char figure;
+	double result;
+
+	cin >> figure;
+
+	switch (figure)
+	{
+	case 's':
+		int squareSide;
+		cin >> squareSide;
+
+		result = squareSide * squareSide;
+		break;
+
+	case 'r':
+		int rectangleWidth;
+		int rectangleHeight;
+
+		cin >> rectangleWidth;
+		cin >> rectangleHeight;
+
+		result = rectangleHeight * rectangleWidth;
+		break;
+
+	case 'c':
+		int circleRadius;
+
+		cin >> circleRadius;
+
+		result = PI * circleRadius * circleRadius;
+		break;
+
+	case 't':
+		int triangleSide;
+		int triangleHeight;
+
+		cin >> triangleSide;
+		cin >> triangleHeight;
+
+		result = triangleHeight * triangleSide / 2;
+		break;
+
+	default:
+		break;
+	}
+
+	cout << result;
+*/
+
+//int x = 1;
+//int a = x++; --> a = x (1) then x = 2
+//int b = ++x; --> x = 3 then b = x (3)
 
 // 1) cout << "Oh what\na happy day!\nOh yes,\nwhat a happy day!\n";
 
@@ -187,4 +298,58 @@ int main()
 	lastFour = cardNumber % 10000;
 
 	cout << "XXXXXXXXXXXX" << lastFour;
+*/
+
+/* napred
+	int weekdayNumber;
+	string weekdayOutput;
+
+	cin >> weekdayNumber;
+	
+	switch (weekdayNumber)
+	{
+	case 1:
+		weekdayOutput = "Pondrelnik";
+		break;
+	case 2:
+		weekdayOutput = "Vtornik";
+		break;
+	case 3:
+		weekdayOutput = "Srqda";
+		break;
+	case 4:
+		weekdayOutput = "Chetvurtuk";
+		break;
+	case 5:
+		weekdayOutput = "Petak";
+		break;
+	case 6:
+		weekdayOutput = "Subta";
+		break;
+	case 7:
+		weekdayOutput = "Nidelq";
+		break;
+	default:
+		weekdayOutput = "Basi mamito nema takoa";
+		break;
+	}
+
+	cout << weekdayOutput;
+
+*/
+
+/*
+	int number;
+	cin >> number;
+
+	if (number < 100)
+	{
+		cout << "Pod 100";
+	}
+	else if (number >= 100 && number <= 200) {
+		cout << "mejdu 100 i 200";
+	}
+	else {
+		cout << "golqmo poveche ot 200";
+	}
 */
