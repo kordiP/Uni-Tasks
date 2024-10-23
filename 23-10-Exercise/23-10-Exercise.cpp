@@ -4,21 +4,115 @@ using namespace std;
 
 int main()
 {
-    int number;
-    cin >> number;
+    int numberA;
+    int numberB;
 
-    for (int i = 0; i < number; i++)
+    cin >> numberA;
+    cin >> numberB;
+
+    for (int currentNumber = numberA; currentNumber < numberB; currentNumber++)
     {
-        int currentNumber;
-        cin >> currentNumber;
-
-        // to-do
+        for (int del = 0; del < currentNumber; del++)
+        {
+            int currSum = 0;
+            
+        }
     }
 }
 
 /*
-int input;
+int size;
+    char symbol;
+
+    cin >> size;
+    cin >> symbol;
+
+    for (int row = 0; row < size - 1; row++)
+    {
+        for (int i = 0; i < size * 2 - row; i++)
+        {
+            cout << " ";
+        }
+        for (int i = 0; i < row * 2 + 1; i++)
+        {
+            cout << symbol;
+        }
+        cout << endl;
+    }
+
+    for (int i = 0; i <= size; i++)
+    {
+        cout << " ";
+    }
+
+    for (int i = 0; i < size * 2 - 1; i++)
+    {
+        cout << symbol;
+    }
+
+    cout << endl;
+
+    for (int row = size - 1; row > 0; row--)
+    {
+        for (int i = size * 2 - row + 1; i > 0; i--)
+        {
+            cout << " ";
+        }
+        for (int i = row * 2 - 1; i > 0; i--)
+        {
+            cout << symbol;
+        }
+        cout << endl;
+    }
+*/
+
+/*
+int number;
+    int dupeCheck = 0;
+    cin >> number;
+
+    for (int a = 1; a < number; a++)
+    {
+        for (int b = 1; b < number; b++)
+        {
+            for (int c = 1; c < number; c++)
+            {
+                if ((a * a) + (b * b) == (c * c) && b != dupeCheck)
+                {
+                    cout << a << " " << b << " " << c << "\n";
+                    dupeCheck = a;
+                }
+            }
+        }
+    }
+*/
+
+/*
+int number;
+    int sumOfAllNumbers = 0;
+    int sumOfInputNumbers = 0;
+
+    cin >> number;
+
+    for (int i = 1; i <= number; i++)
+    {
+        sumOfAllNumbers += i;
+    }
+
+    for (int i = 1; i <= number - 1; i++)
+    {
+        int currentNumber;
+        cin >> currentNumber;
+        sumOfInputNumbers += currentNumber;
+    }
+
+    cout << (sumOfAllNumbers - sumOfInputNumbers);
+*/
+
+/*
+ int input;
     int resultCube;
+    bool passedFirstNonZeroDigit = false;
 
     cin >> input;
 
@@ -30,9 +124,13 @@ int input;
 
         resultCube /= 10;
 
-        if (currentNumber == 0 && resultCube / 10 != 0)
+        if (currentNumber == 0 && !passedFirstNonZeroDigit)
         {
             continue;
+        }
+        else
+        {
+            passedFirstNonZeroDigit = true;
         }
 
         cout << currentNumber;
