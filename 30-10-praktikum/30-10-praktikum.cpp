@@ -127,7 +127,7 @@ bool isSquare(int number)
     return false;
 }
 
-int concatNumbers(int numberFront, int numberBack) // to-do
+int concatNumbers(int numberFront, int numberBack) // to-do 
 {
     int digitsSecond = getLength(numberBack);
 
