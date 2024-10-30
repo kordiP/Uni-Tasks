@@ -130,12 +130,7 @@ bool isSquare(int number)
 int concatNumbers(int numberFront, int numberBack) // to-do 
 {
     int digitsSecond = getLength(numberBack);
-
-    int finalNumber = numberFront * (powerOfIntegers(10, numberBack));
-
-    finalNumber += numberBack;
-
-    return finalNumber;
+    return numberFront * (powerOfIntegers(10, digitsSecond)) + numberBack;
 }
 
 int main()
