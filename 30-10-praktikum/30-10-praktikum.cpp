@@ -133,8 +133,29 @@ int concatNumbers(int numberFront, int numberBack) // to-do
     return numberFront * (powerOfIntegers(10, digitsSecond)) + numberBack;
 }
 
+bool isInInterval(int numberToCheck, int intervalFrom, int intervalTo)
+{
+    if (numberToCheck >= intervalFrom && numberToCheck <= intervalTo)
+    {
+        return true;
+    }
+    return false;
+}
+
+int askUser(int intervalFrom, int intervalTo)
+{
+    int numberInput;
+    
+    do
+    {
+        std::cin >> numberInput;
+    } while (!isInInterval(numberInput, intervalFrom, intervalTo));
+
+    return numberInput;
+}
+
 int main()
 {
-    std::cout << concatNumbers(123, 456);
+    std::cout << askUser(123, 456);
 }
 
