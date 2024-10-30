@@ -154,8 +154,30 @@ int askUser(int intervalFrom, int intervalTo)
     return numberInput;
 }
 
+int calculateAction(int numberA, int numberB, char action)
+{
+    switch (action) {
+    case '+':
+    default:
+        return numberA + numberB;
+        break;
+    case '-':
+        return numberA - numberB;
+        break;
+    case '*':
+        return numberA * numberB;
+        break;
+    case '/':
+        return numberA / numberB;
+        break;
+    case '%':
+        return numberA % numberB;
+        break;
+    }
+}
+
 int main()
 {
-    std::cout << askUser(123, 456);
+    std::cout << calculateAction(5, 1, '%');
 }
 
