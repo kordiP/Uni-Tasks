@@ -1,28 +1,62 @@
 #include <iostream>
 
-// in functions, paramater array is the same as pointer, so working with reference, not value
-// so any changes in the functions are also in the main in the array
-
-void arrayInput(int array[], int size)
+void printArray(int array[], int size)
 {
     for (int i = 0; i < size; i++)
     {
-        std::cin >> array[i];
+        std::cout << array[i] << ", ";
     }
 }
 
-void arrayOutput(int array[], int size) 
+int linearSearchArray(int array[], int size, int targetVal)
 {
     for (int i = 0; i < size; i++)
     {
-        std::cout << array[i];
+        if (array[i] == targetVal)
+        {
+            return i;
+        }
     }
 }
+
+void reverseArray(int array[], int size)
+{
+    for (int i = 0; i < size / 2; i++)
+    {
+        int tmp = array[i];
+        array[i] = array[size - 1 - i];
+        array[size - 1 - i] = tmp;
+    }
+}
+
+void bubbleSort(int array[], int size)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        for (int j = 0; j < size - 1; j++)
+        {
+            // ...
+        }
+        if (array[i] > array[i + 1])
+        {
+            int tmp = array[i];
+            array[i] = array[i + 1];
+            array[i + 1] = tmp;
+        }
+    }
+}
+
+void binarySearch(int array[], int size)
+{
+
+}
+
 int main()
 {
-    const int ARRAY_SIZE = 2;
-    int array[ARRAY_SIZE] = {};
-    arrayInput(array, ARRAY_SIZE);
-    arrayOutput(array, ARRAY_SIZE);
+    const int size = 5;
+    int array[size] = {1, 5, 4, 3, 5};
+    
+    bubbleSort(array, size);
+    printArray(array, size);
 }
 
