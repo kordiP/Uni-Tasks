@@ -51,12 +51,16 @@ void binarySearch(int array[], int size)
 
 }
 
+
+
 int main()
 {
-    const int size = 5;
+    /*const int size = 5;
     int array[size] = {1, 5, 4, 3, 5};
     
     bubbleSort(array, size);
-    printArray(array, size);
+    printArray(array, size);*/
+
+    
 }
 
