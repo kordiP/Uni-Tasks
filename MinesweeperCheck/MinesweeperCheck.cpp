@@ -6,9 +6,12 @@ const int MIN_CAPACITY = 3;
 const int MAX_CAPACITY = 30;
 const int MINE_VALUE = 9;
 
-bool input(int field[][MAX_CAPACITY], int& rows, int& columns)
+bool input(int field[MAX_CAPACITY][MAX_CAPACITY], int& rows, int& columns)
 {
+    cout << "Rows: ";
     cin >> rows;
+
+    cout << "Columns: ";
     cin >> columns;
 
     if (rows < MIN_CAPACITY || rows > MAX_CAPACITY || columns < MIN_CAPACITY || columns > MAX_CAPACITY)
@@ -16,6 +19,8 @@ bool input(int field[][MAX_CAPACITY], int& rows, int& columns)
         cout << "Invalid size!";
         return false;
     }
+
+    cout << "Input the field:\n";
 
     for (int i = 0; i < rows; i++)
     {
@@ -28,7 +33,7 @@ bool input(int field[][MAX_CAPACITY], int& rows, int& columns)
     return true;
 }
 
-bool checkSurroundingTiles(int field[MAX_CAPACITY][MAX_CAPACITY], int arraySizeRows, int arraySizeColumns, int currentTileRow, int currentTileColumn)
+bool checkSurroundingTiles(int field[MAX_CAPACITY][MAX_CAPACITY], int fieldSizeRows, int fieldSizeColumns, int currentTileRow, int currentTileColumn)
 {
      int tileValue = field[currentTileRow][currentTileColumn];
 
@@ -40,8 +45,8 @@ bool checkSurroundingTiles(int field[MAX_CAPACITY][MAX_CAPACITY], int arraySizeR
     int startIndexRows = (currentTileRow <= 0) ? 0 : currentTileRow - 1;
     int startIndexCols = (currentTileColumn <= 0) ? 0 : currentTileColumn - 1;
 
-    int endIndexRows = (currentTileRow >= arraySizeRows) ? arraySizeRows - 1 : currentTileRow + 1;
-    int endIndexCols = (currentTileColumn >= arraySizeColumns) ? arraySizeColumns - 1 : currentTileColumn + 1;
+    int endIndexRows = (currentTileRow >= fieldSizeRows) ? fieldSizeRows - 1 : currentTileRow + 1;
+    int endIndexCols = (currentTileColumn >= fieldSizeColumns) ? fieldSizeColumns - 1 : currentTileColumn + 1;
 
     int mineCount = 0;
 
@@ -64,19 +69,19 @@ bool checkSurroundingTiles(int field[MAX_CAPACITY][MAX_CAPACITY], int arraySizeR
     return false;
 }
 
-int checkWholeField()
+int checkWholeField(int field[MAX_CAPACITY][MAX_CAPACITY], int fieldSizeRows, int fieldSizeColumns)
 {
-    /*for (int currentRow = 0; currentRow < rows; currentRow++)
+    for (int currentRow = 0; currentRow < fieldSizeRows; currentRow++)
     {
-        for (int currentCol = 0; currentCol < columns; currentCol++)
+        for (int currentCol = 0; currentCol < fieldSizeColumns; currentCol++)
         {
-            bool correctSurroundings = checkSurroundingTiles(field, rows, columns, currentRow, currentCol);
+            bool correctSurroundings = checkSurroundingTiles(field, fieldSizeRows, fieldSizeColumns, currentRow, currentCol);
             if (!correctSurroundings)
             {
                 return 0;
             }
         }
-    }*/
+    }
 
     return 1;
 }
@@ -93,5 +98,5 @@ int main()
         return 0;
     }
 
-    
+    cout << "Is possible: " << checkWholeField(field, rows, columns);
 }
