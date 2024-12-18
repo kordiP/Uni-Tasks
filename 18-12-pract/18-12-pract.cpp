@@ -62,8 +62,5 @@ int main()
 
     char* nonCapital = nonCapitalStr(input);
 
-    for (int i = 0; i < 10; i++)
-    {
-        cout << nonCapital[i];
-    }
+    delete[] nonCapital;
 }
