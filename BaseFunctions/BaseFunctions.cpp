@@ -263,7 +263,7 @@ int minInArray(int array[], int size)
 
 #pragma endregion
 
-#pragma region MyRegion
+#pragma region MatrixFunctions
 // Returns the minimal value of the matrix.
 int smallestElement(int** matrix, int matrixSizeRows, int matrixSizeCols)
 {
