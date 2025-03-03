@@ -47,7 +47,3 @@ int getFileSize(ifstream& ifs) // never skip &, because a copy of the stream wil
 	return fileSize; // return the file size, because we positioned the pointer at the byte after the last one in the file.
 }
 
-int main()
-{
-
-}

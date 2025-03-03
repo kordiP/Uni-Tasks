@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{40e1a982-8c1a-4a12-9ebc-dfcf821f6116}</ProjectGuid>
-    <RootNamespace>FileStreamsPR2802</RootNamespace>
+    <ProjectGuid>{db84a75c-2153-4a7d-9142-ad16e6fb551a}</ProjectGuid>
+    <RootNamespace>PractTasksFiles</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,11 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FileStreams-PR-2802.cpp" />
-    <ClCompile Include="Tasks.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="result.txt" />
+    <ClCompile Include="Pract-Tasks-Files.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
