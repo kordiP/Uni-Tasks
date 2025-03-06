@@ -4,50 +4,49 @@
 using namespace std;
 
 /* Task 3 */
+const int RED_CONV = 65536;
+const int GREEN_CONV = 256;
+// only for reading
+const int BLUE_CONV = 256;
 struct Color
 {
     int red_val; // read_num / 65536
     int green_val; // (read_num / 256) % 256
     int blue_val; // read_num % 256
 };
-// stream needs to be in binary mode + result dynamically allocated
-void readColorCode(ifstream& ifs, Color* result)
+Color* readColorCode(ifstream& ifs)
 {
-    Color curColor = { -1, -1, -1 };
+    //if (!ifs.is_open())
+    //{
+    //    cerr << "Cannot open file.\n";
+    //    return curColor;
+    //}
 
-    if (!ifs.is_open())
-    {
-        cerr << "Cannot open file.\n";
-        return;
-    }
+    //char str[8];
+    //int currNum = 0;
+    //int arrIndex = 0;
 
-    char str[8];
-    int currNum = 0;
-    int arrIndex = 0;
+    //while (ifs.read(str, 8))
+    //{
+    //    currNum = asciiToInt(str);
 
-    while (ifs.read(str, 8))
-    {
-        // lazy to write myself, pls allow :>
-        currNum = atoi(str);
+    //    // read/save to struct
+    //    curColor.red_val = currNum / RED_CONV;
+    //    curColor.green_val = (currNum / GREEN_CONV) % GREEN_CONV;
+    //    curColor.blue_val = currNum % BLUE_CONV;
 
-        // read/save to struct
-        curColor.red_val = currNum / 65536;
-        curColor.green_val = (currNum / 256) % 256;
-        curColor.blue_val = currNum % 256;
+    //    // save to arr
+    //    result[arrIndex++] = curColor;
 
-        // save to arr
-        result[arrIndex++] = curColor;
+    //    // skip the '|'
+    //    ifs.seekg(1, ios::cur);
+    //}
 
-        // reset
-        curColor = { -1, -1, -1 };
+    //ifs.seekg(ios::beg);
 
-        // skip the '|'
-        ifs.seekg(1, ios::cur);
-    }
-
-    ifs.seekg(ios::beg);
+    return NULL;
 }
-void saveRedToFile(ofstream& ofs, Color* colors, int colorsSize)
+void saveRedToFile(ofstream& ofs, const Color* colors, int colorsSize)
 {
     if (!ofs.is_open())
     {
@@ -63,7 +62,7 @@ void saveRedToFile(ofstream& ofs, Color* colors, int colorsSize)
             {
                 ofs << '|';
             }
-            int num = colors[i].red_val * 65536 + colors[i].green_val * 256 + colors[i].blue_val;
+            int num = colors[i].red_val * RED_CONV + colors[i].green_val * GREEN_CONV + colors[i].blue_val;
             ofs << num;
         }
     }
@@ -81,7 +80,7 @@ struct Relation
     Pair pairs[MAX_PAIR_COUNT];
     int size;
 };
-void writePairToFile(Pair pair, ofstream& ofs)
+void writePairToFile(const Pair& pair, ofstream& ofs)
 {
     if (!ofs.is_open())
     {
@@ -91,7 +90,7 @@ void writePairToFile(Pair pair, ofstream& ofs)
 
     ofs << pair.num1 << " " << pair.num2;
 }
-void writeRelationToFile(Relation rel, ofstream& ofs)
+void writeRelationToFile(const Relation& rel, ofstream& ofs)
 {
     if (!ofs.is_open())
     {
@@ -141,9 +140,9 @@ Relation readRelationFromFile(ifstream& ifs)
 
     return rel;
 }
-void addPairToRelation(Pair pair, Relation rel)
+void addPairToRelation(const Pair& pair, Relation& rel)
 {
-    if (rel.size == 25)
+    if (rel.size == MAX_PAIR_COUNT)
     {
         cout << "Max pair size reached. Can not add pair.";
         return;
@@ -207,7 +206,7 @@ int main()
     ofstream ofs("red.txt");
     Color* colors = new Color[3];
 
-    readColorCode(ifs, colors);
+    readColorCode(ifs);
 
     for (int i = 0; i < 3; i++)
     {
