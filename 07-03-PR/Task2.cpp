@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-void replaceCharsInFile(const char* fileName, char toRep, char repWith)
+void replaceCharsInFile(const char* fileName, char toRep, char repWith) // only fstream
 {
 	std::ifstream ifs(fileName);
 	if (!ifs.is_open())
@@ -47,9 +47,9 @@ void replaceCharsInFile(const char* fileName, char toRep, char repWith)
 	ofs.close();
 }
 
-int main()
-{
-	char toRep = 'g', repWith = '-';
-
-	replaceCharsInFile("replace.txt", toRep, repWith);
-}
+//int main()
+//{
+//	char toRep = 'g', repWith = '-';
+//
+//	replaceCharsInFile("replace.txt", toRep, repWith);
+//}
