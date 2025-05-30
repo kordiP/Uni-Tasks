@@ -4,10 +4,11 @@
 class Student : public User
 {
 private:
-	MyVector<int> courses;
+	MyVector<MyString> courses;
 public:
-	const MyVector<int>& getCoursesIds() const;
-	MyVector<int>& getCoursesIds();
+	void addToCourse(const MyString& courseName);
+	const MyVector<MyString> getCourses() const;
+
 	Student() = default;
 	Student(const MyString& fName, const MyString& lName, const MyString& pass);
 

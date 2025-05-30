@@ -32,6 +32,11 @@ public:
 	bool operator>(const MyString& mstr) const;
 	bool operator>=(const MyString& mstr) const;
 	bool operator<=(const MyString& mstr) const;
+
+	MyString& doubleToString(double num) const;
+
+	friend MyString operator+(const MyString& lhs, char sym);
+	friend MyString operator+(char sym, const MyString& lhs);
 };
 
 MyString operator+(const MyString& lhs, const MyString& rhs);

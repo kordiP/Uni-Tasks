@@ -2,5 +2,6 @@
 
 int main()
 {
-    SystemEngine::getInstance().run();
+    SystemEngine* se = SystemEngine::getInstance();
+    se->run();
 }

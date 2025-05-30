@@ -2,7 +2,7 @@
 
 Message::Message()
 {
-    senderId = -1;
+    senderId = NULL;
     description = "";
     timeSent = NULL;
 }

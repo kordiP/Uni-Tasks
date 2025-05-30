@@ -1,0 +1,1 @@
+// Singleton + Abstr Factory + Factory

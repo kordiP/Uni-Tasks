@@ -12,6 +12,7 @@ private:
 	void copyFrom(const MyVector& other);
 	void freeMem();
 	void resize();
+	size_t getCapacity() const;
 public:
 	MyVector();
 	MyVector(const MyVector& other);
@@ -22,10 +23,11 @@ public:
 	T popBack();
 	void insert(const T& element, int pos);
 	void removeAt(int pos);
+	void remove(T& element);
 	const T& operator[](int index) const;
 	T& operator[](int index);
+	bool contains(const T& element) const;
 	size_t getSize() const;
-	size_t getCapacity() const;
 	void print() const;
 	void clear();
 };
@@ -158,6 +160,23 @@ void MyVector<T>::removeAt(int pos)
 }
 
 template<typename T>
+void MyVector<T>::remove(T& element)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		if (data[i] == element)
+		{
+			for (size_t j = i; j < size - 1; ++j)
+			{
+				data[j] = data[j + 1];
+			}
+
+			return;
+		}
+	}
+}
+
+template<typename T>
 const T& MyVector<T>::operator[](int index) const
 {
 	if (index < 0 || index >= size)
@@ -177,6 +196,19 @@ T& MyVector<T>::operator[](int index)
 	}
 
 	return data[index];
+}
+
+template<typename T>
+bool MyVector<T>::contains(const T& element) const
+{
+	for (size_t i = 0; i < size; i++)
+	{
+		if (data[i] == element)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 template<typename T>

@@ -125,6 +125,37 @@ bool MyString::operator<=(const MyString& mstr) const
     return !(*this < mstr);
 }
 
+MyString& MyString::doubleToString(double num) const
+{
+    MyString result;
+
+    long long intPart = (long long)(num);
+    double fracPart = num - intPart;
+
+    if (intPart == 0) {
+        result = result + '0';
+    }
+    else {
+        MyString intStr;
+        while (intPart > 0) {
+            intStr = (char)('0' + (intPart % 10)) + intStr;
+            intPart /= 10;
+        }
+        result += intStr;
+    }
+
+    result += ".";
+
+    for (int i = 0; i < 2; ++i) {
+        fracPart *= 10;
+        int digit = (int)(fracPart);
+        result = result + (char)('0' + digit);
+        fracPart -= digit;
+    }
+
+    return result;
+}
+
 std::ostream& operator<<(std::ostream& os, const MyString& mstr)
 {
     os << mstr.str;
@@ -160,6 +191,38 @@ std::istream& getline(std::istream& is, MyString& mstr)
     strcpy_s(mstr.str, mstr.size + 1, buff);
 
     return is;
+}
+
+MyString operator+(const MyString& lhs, char sym)
+{
+    size_t newLen = lhs.size + 1;
+    char* newData = new char[newLen + 1];
+
+    for (size_t i = 0; i < lhs.size; i++)
+        newData[i] = lhs.str[i];
+
+    newData[newLen - 1] = sym;
+    newData[newLen] = '\0';
+
+    MyString result(newData);
+    delete[] newData;
+    return result;
+}
+
+MyString operator+(char sym, const MyString& lhs)
+{
+    size_t newLen = lhs.size + 1;
+    char* newData = new char[newLen + 1];
+
+    newData[0] = sym;
+    for (size_t i = 1; i < newLen; i++)
+        newData[i] = lhs.str[i - 1];
+
+    newData[newLen] = '\0';
+
+    MyString result(newData);
+    delete[] newData;
+    return result;
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs)

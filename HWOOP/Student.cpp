@@ -1,11 +1,11 @@
 #include "Student.h"
 
-const MyVector<int>& Student::getCoursesIds() const
+void Student::addToCourse(const MyString& courseName)
 {
-	return courses;
+	courses.pushBack(courseName);
 }
 
-MyVector<int>& Student::getCoursesIds()
+const MyVector<MyString> Student::getCourses() const
 {
 	return courses;
 }

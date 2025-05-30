@@ -1,4 +1,5 @@
 #include "User.h"
+#include "Course.h"
 int User::counter = 0;
 
 User::User(const MyString& fName, const MyString& lName, const MyString& pass)
@@ -35,9 +36,11 @@ bool User::checkPassword(const MyString& input) const
     return input == password;
 }
 
-void User::receiveMessage(const Message& mess)
+User& User::receiveMessage(const Message& mess)
 {
     inbox.pushBack(mess);
+
+    return *this;
 }
 
 void User::showInbox() const
@@ -45,7 +48,9 @@ void User::showInbox() const
     inbox.print();
 }
 
-void User::clearInbox()
+User& User::clearInbox()
 {
     inbox.clear();
+
+    return *this;
 }

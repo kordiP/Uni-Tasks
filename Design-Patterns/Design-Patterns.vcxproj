@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{884163aa-4362-4d0a-9d5a-4d061b2d81a1}</ProjectGuid>
-    <RootNamespace>HWOOP</RootNamespace>
+    <ProjectGuid>{17d60858-92e6-4aaa-b34a-f93ac3d21e65}</ProjectGuid>
+    <RootNamespace>DesignPatterns</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,30 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Admin.cpp" />
-    <ClCompile Include="Assignment.cpp" />
-    <ClCompile Include="Course.cpp" />
-    <ClCompile Include="HWOOP.cpp" />
-    <ClCompile Include="Lecturer.cpp" />
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="MyString.cpp" />
-    <ClCompile Include="Serializers.cpp" />
-    <ClCompile Include="Student.cpp" />
-    <ClCompile Include="SystemEngine.cpp" />
-    <ClCompile Include="User.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Admin.h" />
-    <ClInclude Include="Assignment.h" />
-    <ClInclude Include="Course.h" />
-    <ClInclude Include="Lecturer.h" />
-    <ClInclude Include="Message.h" />
-    <ClInclude Include="MyString.h" />
-    <ClInclude Include="MyVector.hpp" />
-    <ClInclude Include="Serializers.h" />
-    <ClInclude Include="Student.h" />
-    <ClInclude Include="SystemEngine.h" />
-    <ClInclude Include="User.h" />
+    <ClCompile Include="Design-Patterns.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="Singleton.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

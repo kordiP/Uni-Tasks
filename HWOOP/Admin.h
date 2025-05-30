@@ -4,8 +4,15 @@
 
 class Admin : public User
 {
-public:
+private:
+	static Admin* instance;
 	Admin();
-	static Admin& getInstance();
+public:
+	Admin(const Admin&) = delete;
+	Admin& operator=(const Admin&) = delete;
+
+	static Admin* getInstance();
 	const MyString& getRole() const override;
+
+	~Admin();
 };

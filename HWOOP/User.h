@@ -21,9 +21,9 @@ public:
 	const User& setPassword(const MyString& newPass);
 	bool checkPassword(const MyString& input) const;
 
-	virtual void receiveMessage(const Message& mess);
+	virtual User& receiveMessage(const Message& mess);
 	void showInbox() const;
-	void clearInbox();
+	User& clearInbox();
 
 	virtual const MyString& getRole() const = 0;
 
