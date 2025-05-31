@@ -18,8 +18,6 @@ private:
 	static SystemEngine* instance;
 	SystemEngine();
 
-	MyVector<MyString> commands;
-
 	User* currentUser;
 	Admin* admin;
 	MyVector<Student> students;
@@ -27,16 +25,20 @@ private:
 	MyVector<Course> courses;
 
 	// for engine
-	bool userHasAccess(const MyString& expectedRole);
+	bool userHasAccess(const MyString& expectedRole) const;
 	User* getUser(int userId);
 	Student& getStudent(int userId);
 	Lecturer& getLecturer(int userId);
 	Course& getCourse(const MyString& courseName);
 	// any user
 	void sendMessage(int recepientId, const MyString& descr);
+	void changePassword(const MyString& oldPass, const MyString& newPass);
+	void printMailbox() const;
+	void clearInbox();
+	void printLoginInfo() const;
 	// student only
 	void submitStudentSolution(const MyString& courseName, const MyString& assignmentName, const MyString& sol);
-	void getGrades();
+	void printGrades();
 	// lecturers only
 	void createCourse(const MyString& courseName, const MyString& pass);
 	void createAssignment(const MyString& title, const MyString& courseName);

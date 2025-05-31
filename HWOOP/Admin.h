@@ -12,7 +12,7 @@ public:
 	Admin& operator=(const Admin&) = delete;
 
 	static Admin* getInstance();
-	const MyString& getRole() const override;
+	const MyString getRole() const override;
 
 	~Admin();
 };

@@ -14,7 +14,12 @@ Student::Student(const MyString& fName, const MyString& lName, const MyString& p
 {
 }
 
-const MyString& Student::getRole() const
+bool Student::operator==(const Student& other) const
+{
+	return this->getId() == other.getId();
+}
+
+const MyString Student::getRole() const
 {
 	return "Student";
 }

@@ -10,7 +10,7 @@ void MyString::copyFrom(const MyString& other)
 {
     size = other.size;
     str = new char[size + 1];
-    strcpy_s(str, size, other.str);
+    strcpy_s(str, size + 1, other.str);
     str[size] = '\0';
 }
 
@@ -152,6 +152,97 @@ MyString& MyString::doubleToString(double num) const
         result = result + (char)('0' + digit);
         fracPart -= digit;
     }
+
+    return result;
+}
+
+int MyString::asciiToInt() const
+{
+    int result = 0;
+    for (int i = 0; i < size; ++i) {
+        char c = str[i];
+        if (c >= '0' && c <= '9') {
+            result = result * 10 + (c - '0');
+        }
+        else {
+            throw std::invalid_argument("Something went wrong.");
+        }
+    }
+    return result;
+}
+
+double MyString::asciiToDouble() const
+{
+    int i = 0;
+    int len = size;
+    double result = 0.0;
+    bool isNegative = false;
+
+    // Skip leading spaces
+    while (i < len && str[i] == ' ') {
+        i++;
+    }
+
+    // Handle sign
+    if (i < len && (str[i] == '-' || str[i] == '+')) {
+        isNegative = (str[i] == '-');
+        i++;
+    }
+
+    // Integer part
+    while (i < len && str[i] >= '0' && str[i] <= '9') {
+        result = result * 10 + (str[i] - '0');
+        i++;
+    }
+
+    // Fractional part
+    if (i < len && str[i] == '.') {
+        i++;
+        double divisor = 10.0;
+        while (i < len && str[i] >= '0' && str[i] <= '9') {
+            result += (str[i] - '0') / divisor;
+            divisor *= 10.0;
+            i++;
+        }
+    }
+
+    return isNegative ? -result : result;
+}
+
+size_t MyString::find(char symbol, size_t skip) const
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        if (str[i] == symbol)
+        {
+            if (skip > 0)
+            {
+                skip--;
+                continue;
+            }
+            return i;
+        }
+    }
+    return -1;
+}
+
+MyString MyString::substring(size_t start, size_t length) const
+{
+    if (start >= this->size)
+        return MyString();
+
+    if (start + length > this->size || length == 0)
+        length = this->size - start;
+
+    MyString result;
+    result.size = length;
+    result.str = new char[length + 1];
+
+    for (size_t i = 0; i < length; ++i)
+    {
+        result.str[i] = this->str[start + i];
+    }
+    result.str[length] = '\0';
 
     return result;
 }

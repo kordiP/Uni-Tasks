@@ -12,5 +12,7 @@ public:
 	Student() = default;
 	Student(const MyString& fName, const MyString& lName, const MyString& pass);
 
-	const MyString& getRole() const override;
+	bool operator==(const Student&) const;
+
+	const MyString getRole() const override;
 };

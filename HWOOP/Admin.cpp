@@ -14,7 +14,7 @@ Admin* Admin::getInstance()
 	return instance;
 }
 
-const MyString& Admin::getRole() const
+const MyString Admin::getRole() const
 {
 	return "Admin";
 }

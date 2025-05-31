@@ -55,6 +55,12 @@ const Assignment& Course::getAssignment(const MyString& assign) const
 	throw std::invalid_argument("Assignment not found.");
 }
 
+void Course::addSolutionToAssignment(const MyString& assign, int stId, const MyString& fName, const MyString& lName, const MyString& solution)
+{
+	Assignment& assignment = getAssignment(assign);
+	assignment.submitSolution(stId, fName, lName, solution);
+}
+
 void Course::gradeAssignment(const MyString& assign, int studentId, double grade, const MyString& comment)
 {
 	Assignment& assignment = getAssignment(assign);

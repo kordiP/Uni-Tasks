@@ -15,5 +15,7 @@ public:
 	Lecturer() = default;
 	Lecturer(const MyString& fName, const MyString& lName, const MyString& pass);
 
-	const MyString& getRole() const override;
+	bool operator==(const Lecturer&) const;
+
+	const MyString getRole() const override;
 };

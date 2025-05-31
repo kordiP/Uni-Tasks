@@ -8,27 +8,9 @@ SystemEngine* SystemEngine::instance = nullptr;
 SystemEngine::SystemEngine() : admin(Admin::getInstance())
 {
 	currentUser = nullptr;
-
-	commands.pushBack("login");
-	commands.pushBack("add_teacher");
-	commands.pushBack("add_student");
-	commands.pushBack("message_all");
-	commands.pushBack("logout");
-	commands.pushBack("change_password");
-	commands.pushBack("create_course");
-	commands.pushBack("add_to_course");
-	commands.pushBack("mailbox");
-	commands.pushBack("enroll");
-	commands.pushBack("assign_homework");
-	commands.pushBack("message_students");
-	commands.pushBack("submit_assignment");
-	commands.pushBack("view_assignment_submissions");
-	commands.pushBack("grade_assignment");
-	commands.pushBack("clear_mailbox");
-	commands.pushBack("grades");
 }
 
-bool SystemEngine::userHasAccess(const MyString& expectedRole)
+bool SystemEngine::userHasAccess(const MyString& expectedRole) const
 {
 	if (currentUser->getRole() != expectedRole)
 	{
@@ -55,7 +37,7 @@ User* SystemEngine::getUser(int userId)
 			return &lecturers[i];
 	}
 
-	return nullptr;
+	throw std::invalid_argument("Id not found.");
 }
 
 Student& SystemEngine::getStudent(int userId)
@@ -98,6 +80,38 @@ void SystemEngine::sendMessage(int recepientId, const MyString& descr)
 	recepient->receiveMessage(mess);
 }
 
+void SystemEngine::changePassword(const MyString& oldPass, const MyString& newPass)
+{
+	if (!currentUser->checkPassword(oldPass))
+	{
+		throw std::invalid_argument("Incorrect password.");
+	}
+	
+	currentUser->setPassword(newPass);
+}
+
+void SystemEngine::printMailbox() const
+{
+	currentUser->showInbox();
+}
+
+void SystemEngine::clearInbox()
+{
+	currentUser->clearInbox();
+}
+
+void SystemEngine::printLoginInfo() const
+{
+	if (currentUser->getRole() == "Admin")
+	{
+		return;
+	}
+
+	std::cout << currentUser->getName() << " " << currentUser->getSurname() << " | ";
+	std::cout << currentUser->getRole() << " | ";
+	std::cout << currentUser->getId() << std::endl;
+}
+
 void SystemEngine::submitStudentSolution(const MyString& courseName, const MyString& assignmentName, const MyString& sol)
 {
 	Course& course = getCourse(courseName);
@@ -114,7 +128,7 @@ void SystemEngine::submitStudentSolution(const MyString& courseName, const MyStr
 	course.addSolutionToAssignment(assignmentName, currentUser->getId(), currentUser->getName(), currentUser->getSurname(), sol);
 }
 
-void SystemEngine::getGrades()
+void SystemEngine::printGrades()
 {
 	if (!userHasAccess("Student"))
 	{
@@ -129,10 +143,12 @@ void SystemEngine::getGrades()
 		Course& curCourse = getCourse(studentCourses[i]);
 		const MyVector<Assignment>& assignments = curCourse.getAssignments();
 
-
 		for (size_t i = 0; i < assignments.getSize(); i++)
 		{
-			assignments[i].getStudentGrade(student.getId());
+			std::cout << curCourse.getName() << " | ";
+			std::cout << assignments[i].getTitle() << " | ";
+			std::cout << assignments[i].getStudentGrade(student.getId()) << " | ";
+			std::cout << assignments[i].getSolution(student.getId()).getLecturerResponse() << std::endl;
 		}
 	}
 }
@@ -331,6 +347,11 @@ void SystemEngine::login(int idAtt, const MyString& passAtt)
 {
 	User* u = getUser(idAtt);
 
+	if (currentUser != nullptr)
+	{
+		throw std::logic_error("Already logged in an account.");
+	}
+
 	if (!u->checkPassword(passAtt))
 	{
 		throw std::invalid_argument("Wrong password for account.");
@@ -346,6 +367,7 @@ void SystemEngine::logout()
 	{
 		throw std::logic_error("No logged user.");
 	}
+
 	currentUser = nullptr;
 }
 
@@ -367,20 +389,180 @@ SystemEngine::~SystemEngine()
 void SystemEngine::run()
 {
 	const MyString exitCom("exit");
-	MyString command;
-	getline(std::cin, command);
+	MyString commandLine;
+	std::cout << "> ";
+	getline(std::cin, commandLine);
 
-	while (command != exitCom)
+	while (commandLine != exitCom)
 	{
-		if (true)
+		size_t splitPos = commandLine.find(' ');
+		MyString action = commandLine.substring(0, splitPos);
+
+		try
 		{
+			if (action == "login")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString readId = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				int userId = readId.asciiToInt();
+				MyString passAttempt = commandLine.substring(splitEnd + 1);
+				
+				login(userId, passAttempt);
+				std::cout << "Login succesful!" << std::endl;
+				printLoginInfo();
+			}
+			else if (action == "add_teacher")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString fName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				size_t splitEnd2 = commandLine.find(' ', 2);
+				MyString lName = commandLine.substring(splitEnd + 1, splitEnd2 - splitEnd - 1);
+				MyString pass = commandLine.substring(splitEnd2 + 1);
 
+				registerLecturer(fName, lName, pass);
+				std::cout << "Added lecturer " << fName << " " << lName << " with ID " << lecturers[lecturers.getSize() - 1].getId() << std::endl;
+			}
+			else if (action == "add_student")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString fName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				size_t splitEnd2 = commandLine.find(' ', 2);
+				MyString lName = commandLine.substring(splitEnd + 1, splitEnd2 - splitEnd - 1);
+				MyString pass = commandLine.substring(splitEnd2 + 1);
+
+				registerStudent(fName, lName, pass);
+				std::cout << "Added student " << fName << " " << lName << " with ID " << students[students.getSize() - 1].getId() << std::endl;
+			}
+			else if (action == "message_all")
+			{
+				MyString description = commandLine.substring(splitPos + 1);
+
+				sendGlobalMessage(description);
+			}
+			else if (action == "logout")
+			{
+				logout();
+				std::cout << std::endl;
+			}
+			else if (action == "change_password")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString oldPass = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString newPass = commandLine.substring(splitEnd + 1);
+
+				changePassword(oldPass, newPass);
+				std::cout << "Password changed successfully!" << std::endl;
+			}
+			else if (action == "create_course")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString pass = commandLine.substring(splitEnd + 1);
+
+				createCourse(courseName, pass);
+			}
+			else if (action == "add_to_course")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString readId = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				int userId = readId.asciiToInt();
+				MyString courseName = commandLine.substring(splitEnd + 1);
+
+				enrollStudent(userId, courseName);
+			}
+			else if (action == "mailbox")
+			{
+				printMailbox();
+			}
+			else if (action == "enroll")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString passAttempt = commandLine.substring(splitEnd + 1);
+
+				enrollSelf(passAttempt, courseName);
+				std::cout << "Successfully enrolled in " << courseName << "!" << std::endl;
+			}
+			else if (action == "assign_homework")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString title = commandLine.substring(splitEnd + 1);
+
+				createAssignment(title, courseName);
+				std::cout << "Successfully created a new assignment!" << std::endl;
+			}
+			else if (action == "message_students")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString mess = commandLine.substring(splitEnd + 1);
+
+				messageStudentsInCourse(courseName, mess);
+			}
+			else if (action == "submit_assignment")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				size_t splitEnd2 = commandLine.find(' ', 2);
+				MyString assignmentName = commandLine.substring(splitEnd + 1, splitEnd2 - splitEnd - 1);
+				MyString sol = commandLine.substring(splitEnd2 + 1);
+
+				submitStudentSolution(courseName, assignmentName, sol);
+			}
+			else if (action == "message")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString readId = commandLine.substring(splitPos, splitEnd);
+				int userId = readId.asciiToInt();
+				MyString mess = commandLine.substring(splitEnd);
+
+				sendMessage(userId, mess);
+			}
+			else if (action == "view_assignment_submissions")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				MyString assignmentName = commandLine.substring(splitEnd + 1);
+
+				showAssignmentResponses(courseName, assignmentName);
+			}
+			else if (action == "grade_assignment")
+			{
+				size_t splitEnd = commandLine.find(' ', 1);
+				MyString courseName = commandLine.substring(splitPos + 1, splitEnd - splitPos - 1);
+				size_t splitEnd2 = commandLine.find(' ', 2);
+				MyString assignmentName = commandLine.substring(splitEnd + 1, splitEnd2 - splitEnd - 1);
+				size_t splitEnd3 = commandLine.find(' ', 3);
+				MyString readId = commandLine.substring(splitEnd2 + 1, splitEnd3 - splitEnd2 - 1);
+				int studentId = readId.asciiToInt();
+				size_t splitEnd4 = commandLine.find(' ', 4);
+				MyString readGrade = commandLine.substring(splitEnd3 + 1, splitEnd4 - splitEnd3 - 1);
+				double grade = readGrade.asciiToDouble();
+				MyString comment = commandLine.substring(splitEnd4 + 1);
+
+				gradeAssignment(courseName, assignmentName, studentId, grade, comment);
+			}
+			else if (action == "clear_mailbox")
+			{
+				clearInbox();
+			}
+			else if (action == "grades")
+			{
+				printGrades();
+			}
 		}
-		else if (true)
+		catch (const std::invalid_argument& ia)
 		{
-
+			std::cout << ia.what() << std::endl;
+		}
+		catch (const std::logic_error& le)
+		{
+			std::cout << le.what() << std::endl;
 		}
 
-		getline(std::cin, command);
+		commandLine = "";
+		std::cout << "> ";
+		getline(std::cin, commandLine);
 	}
 }

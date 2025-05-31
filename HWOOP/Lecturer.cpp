@@ -15,7 +15,12 @@ Lecturer::Lecturer(const MyString& fName, const MyString& lName, const MyString&
 {
 }
 
-const MyString& Lecturer::getRole() const
+bool Lecturer::operator==(const Lecturer& other) const
+{
+    return this->getId() == other.getId();
+}
+
+const MyString Lecturer::getRole() const
 {
     return "Lecturer";
 }

@@ -69,6 +69,8 @@ const MyString& Assignment::getStudentGrade(int studentId) const
 {
     const SolutionPair& sol = getSolution(studentId);
     MyString grade(" | " + title + " | " + sol.getGrade() + sol.getLecturerResponse());
+
+    return grade;
 }
 
 Assignment::Assignment(const MyString& title) : title(title)

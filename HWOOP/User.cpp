@@ -4,7 +4,7 @@ int User::counter = 0;
 
 User::User(const MyString& fName, const MyString& lName, const MyString& pass)
 {
-    id = counter;
+    id = counter++;
     name = fName;
     surname = lName;
     password = pass;
@@ -45,6 +45,12 @@ User& User::receiveMessage(const Message& mess)
 
 void User::showInbox() const
 {
+    if (inbox.getSize() == 0)
+    {
+        std::cout << "No messages to show." << std::endl;
+        return;
+    }
+
     inbox.print();
 }
 

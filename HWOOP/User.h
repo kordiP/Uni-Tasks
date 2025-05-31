@@ -25,7 +25,7 @@ public:
 	void showInbox() const;
 	User& clearInbox();
 
-	virtual const MyString& getRole() const = 0;
+	virtual const MyString getRole() const = 0;
 
 	virtual ~User() = default;
 };

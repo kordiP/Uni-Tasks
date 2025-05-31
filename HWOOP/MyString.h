@@ -34,6 +34,10 @@ public:
 	bool operator<=(const MyString& mstr) const;
 
 	MyString& doubleToString(double num) const;
+	int asciiToInt() const;
+	double asciiToDouble() const;
+	size_t find(char symbol, size_t skipVals = 0) const;
+	MyString substring(size_t start, size_t length = 0) const;
 
 	friend MyString operator+(const MyString& lhs, char sym);
 	friend MyString operator+(char sym, const MyString& lhs);
